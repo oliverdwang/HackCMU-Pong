@@ -43,7 +43,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        paddle1 = new Sprite(Bitmap.createBitmap(BitmapFactory.decodeResource((getResources(),R.drawable.paddle)),(int)(screenX*P1SIZE),(int)(screenY*P1SIZE),false);
+        paddle1 = new Sprite(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.paddle),(int)(screenX*P1SIZE),(int)(screenY*P1SIZE),false));
         thread.setRunning(true);
         thread.start();
     }
