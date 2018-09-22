@@ -1,18 +1,21 @@
 package w.pongrender;
+
+import android.util.TypedValue;
+import android.content.Context;
+
 public class RendeX {
 	
 	private int ball_R;
 	private int paddle_width;
 	private int paddle_height;
-	
-	final private float ball_R_ratio = 0.05f;
-	final private float paddle_width_ratio = 0.2f;
-	final private float paddle_height_ratio = 0.1f;
 
-	final private float xSensitivity = 0.2f;
-	final private float ySensitivity = 0.2f;
-	final private float singleSideXRange = 30;
-	final private float singleSideYRange = 30;
+	private float ball_R_ratio = 0.05f;
+	private float paddle_ratio = 0.2f;
+
+	private float xSensitivity;
+	private float ySensitivity;
+	private float singleSideXRange;
+	private float singleSideYRange;
 	
 	private float tiltX;
 	private float tiltY;
@@ -34,16 +37,27 @@ public class RendeX {
 	private float deltaX_p2;
 	private float deltaY_p2;
 	
-	public RendeX(int dimenX, int dimenY, float tiltX, float tiltY) {
+	public RendeX(int dimenX, int dimenY, float tiltX, float tiltY, Context context) {
 		//Set initial vlaues
 		this.dimenX = dimenX;
 		this.dimenY = dimenY;
 		this.tiltX = tiltX;
 		this.tiltY = tiltY;
-		this.ball_R = (int)(dimenX*ball_R_ratio);
-		this.paddle_width = (int)(dimenX*paddle_width_ratio);
-		this.paddle_height = (int)(dimenY*paddle_height_ratio);
 
+		TypedValue outValue = new TypedValue();
+		context.getResources().getValue(R.dimen.xSensitivity, outValue, true);
+		this.xSensitivity = outValue.getFloat();
+		context.getResources().getValue(R.dimen.ySensitivity, outValue, true);
+		this.ySensitivity = outValue.getFloat();
+		context.getResources().getValue(R.dimen.singleSideXRange, outValue, true);
+		this.singleSideXRange = (int) outValue.getFloat();
+		context.getResources().getValue(R.dimen.singleSideYRange, outValue, true);
+		this.singleSideYRange = (int) outValue.getFloat();
+
+		this.paddle_width = (int)(dimenX*paddle_ratio);
+		this.paddle_height = (int)(dimenY*paddle_ratio);
+
+		//Generate starting ball position, velocity, and paddle position
 	}
 	
 	public void iterate(float tiltX_p1, float tiltY_p1, float tiltX_p2, float tiltY_p2) {

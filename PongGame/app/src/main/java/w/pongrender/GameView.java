@@ -36,7 +36,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenX = displayMetrics.widthPixels;
         screenY = displayMetrics.heightPixels;
-        computeX= new RendeX(screenX,screenY,MainActivity.getRoll(),MainActivity.getPitch());
+        computeX= new RendeX(screenX,screenY,MainActivity.getRoll(),MainActivity.getPitch(),getContext());
 
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
