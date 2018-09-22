@@ -59,8 +59,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         paddle1 = new Sprite(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.paddle),(int)(screenX*P1SIZE),(int)(screenY*P1SIZE),false));
-        paddle2 = new Sprite(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.paddle),(int)(screenX*P2SIZE),(int)(screenY*P2SIZE),false));
-        ball = new Sprite(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.ball),(int)(screenX*BALLSIZE),(int)(screenY*BALLSIZE),false));
+        paddle2 = new Sprite(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.paddle),(int)(screenX*P2SIZE),(int)(screenY*P2SIZE),false),500,500);
+        ball = new Sprite(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.ball),(int)(screenX*BALLSIZE),(int)(screenY*BALLSIZE),false),200,200);
         grid=makeGrid();
         scoreboard=new Sprite(makeScoreboard());
         depthIndicator=new Sprite(makeDepthIndicator());
@@ -100,8 +100,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             //int[] temp={0,0};
             //paddle1.update(temp);
             paddle1.draw(canvas);
-            //paddle2.draw(canvas);
-            //ball.draw(canvas);
+            paddle2.draw(canvas);
+            ball.draw(canvas);
 
 
         }
