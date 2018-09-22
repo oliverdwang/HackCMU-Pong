@@ -106,7 +106,6 @@ public class RendeX {
 		}
 		Log.v("RendeX Iterate","deltaY_p1=" + Float.toString(deltaY_p1) + " deltaY_p2=" + Float.toString(deltaY_p2));
 
-
 		//Set new velocities
 		//For self
 		p1_v[0] = deltaX_p1;
@@ -123,7 +122,9 @@ public class RendeX {
 		p2_p[0] = p2_p[0]+p2_v[0]*xSensitivity;
 		p2_p[1] = p2_p[1]+p2_v[1]*ySensitivity;
 
-
+		if(p1_p[0] < 0 || p1_p[1] > 1) {
+			//idk
+		}
 	}
 	
 	public int[] renderBall() {

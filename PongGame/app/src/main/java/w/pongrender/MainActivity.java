@@ -1,24 +1,32 @@
 package w.pongrender;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
@@ -26,15 +34,29 @@ public class MainActivity extends TiltActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        //Checks if permission granted/get permission, otherwise inform permissions missing and close app.
+        if(!isPermissionGranted()) {
+            AlertDialog permissionsAlertDialog = new AlertDialog.Builder(MainActivity.this).create();
+            permissionsAlertDialog.setTitle("Permissions Missing");
+            permissionsAlertDialog.setMessage("Critical application permissions are missing. Please enable required permissions in app settings.");
+            permissionsAlertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            permissionsAlertDialog.show();
+            if(permissionsAlertDialog.isShowing()) {
+                permissionsAlertDialog.dismiss(); //Close alert dialog before closing app
+            }
+        }
+
         // This is Richard's onCreate space
         MY_UUID = UUID.fromString("7e3c2295-dc1b-4419-a424-50110c0df0d4");
         connectBluetooth();
-
-
-
-        super.onCreate(savedInstanceState);
-
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 //        Log.d("Tilt Pitch", Float.toString(pitch)); //You can directly pass pitch. Pitch is for up down.
 //        Log.d("Tilt Roll", Float.toString(roll)); //You can directly pass roll. Roll is for left right.
@@ -43,6 +65,42 @@ public class MainActivity extends TiltActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(new GameView(this));
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        for (int i = 0; i < grantResults.length - 1; i++) {
+            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                if (permissions[i].equals(Manifest.permission.BLUETOOTH_ADMIN)) {
+                    Toast.makeText(getApplicationContext(),"Permission needed for wifi scanning, please manually change permissions in settings", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+    //Checks if all required permissions are given, and if not, attempts to request permission
+    public boolean isPermissionGranted() {
+        ArrayList<String> permissions = new ArrayList<>();
+        if (Build.VERSION.SDK_INT >= 23) {
+            //Check all permissions needed are obtained
+            if (checkSelfPermission(Manifest.permission.BLUETOOTH_ADMIN) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.BLUETOOTH_ADMIN)) {
+                    Toast.makeText(getApplicationContext(),"Permission needed for wifi scanning",Toast.LENGTH_SHORT).show();
+                } else {
+                    permissions.add(Manifest.permission.CHANGE_WIFI_STATE);
+                }
+            }
+            Log.v("Permissions check", permissions.toString());
+
+            //After all permissions needed are checked, request all needed permissions
+            if(permissions.size() > 0) {
+                ActivityCompat.requestPermissions(this, permissions.toArray(new String[permissions.size()]), 1);
+                return false;
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static float getPitch() {
