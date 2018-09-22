@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="ball_R_ratio" format="float" type="dimen">0.05f</item>
-    <item name="paddle_ratio" format="float" type="dimen">0.2f</item>
-    <item name="xSensitivity" format="float" type="dimen">0.2f</item>
-    <item name="ySensitivity" format="float" type="dimen">0.2f</item>
-    <item name="singleSideXRange" format="float" type="dimen">30f</item>
-    <item name="singleSideYRange" format="float" type="dimen">30f</item>
+    <item name="ball_R_ratio" format="float" type="dimen">0.05</item>
+    <item name="paddle_ratio" format="float" type="dimen">0.2</item>
+    <item name="xSensitivity" format="float" type="dimen">0.2</item>
+    <item name="ySensitivity" format="float" type="dimen">0.2</item>
+    <item name="singleSideXRange" format="float" type="dimen">30</item>
+    <item name="singleSideYRange" format="float" type="dimen">30</item>
 </resources>
