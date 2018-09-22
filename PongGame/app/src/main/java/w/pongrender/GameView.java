@@ -5,6 +5,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.SurfaceView;
@@ -18,8 +20,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private int screenX;
     private int screenY;
     private RendeX computeX;
+    private Bitmap grid;
 
-    private final float P1SIZE=0.4f;
+    private final float P1SIZE=0.2f;
+    private float WINDOWSIZE;
+    private final float WINDOWGAP=0.3f;
+    private final float GRIDNUMBER=5f;
+    private final float GRIDWIDTH=3f;
 
     public GameView(Context context){
         super(context);
@@ -44,6 +51,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         paddle1 = new Sprite(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.paddle),(int)(screenX*P1SIZE),(int)(screenY*P1SIZE),false));
+        grid=makeGrid();
         thread.setRunning(true);
         thread.start();
     }
@@ -70,9 +78,31 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public void draw(Canvas canvas) {
         super.draw(canvas);
         if (canvas != null) {
-            canvas.drawARGB(100, 225, 225, 255);
+            canvas.drawBitmap(grid, 0, 0, null);
             paddle1.draw(canvas);
 
         }
+    }
+    public Bitmap makeGrid(){
+        Bitmap grid=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.background),screenX,screenY,false);
+        Canvas canvas=new Canvas(grid);
+        Paint paint= new Paint();
+        paint.setColor(getResources().getColor(R.color.gridColor));
+        paint.setStrokeWidth(GRIDWIDTH);
+        WINDOWSIZE=1-(WINDOWGAP);
+
+        canvas.drawLine(0,0,screenX*(1-WINDOWSIZE),screenY*(1-WINDOWSIZE),paint);
+        canvas.drawLine(screenX*(WINDOWSIZE),screenY*(WINDOWSIZE),screenX*(1),screenY*(1),paint);
+        canvas.drawLine(0,screenY*(1),screenX*(1-WINDOWSIZE),screenY*(WINDOWSIZE),paint);
+        canvas.drawLine(screenX*(1),screenY*(0),screenX*(WINDOWSIZE),screenY*(1-WINDOWSIZE),paint);
+
+        for(int i=1;i<=((int)GRIDNUMBER);i++){
+            WINDOWSIZE=1-(WINDOWGAP/GRIDNUMBER*i);
+            canvas.drawLine(screenX * (WINDOWSIZE), screenY * (WINDOWSIZE), screenX * (WINDOWSIZE), screenY * (1 - WINDOWSIZE), paint);
+            canvas.drawLine(screenX * (WINDOWSIZE), screenY * (WINDOWSIZE), screenX * (1 - WINDOWSIZE), screenY * (WINDOWSIZE), paint);
+            canvas.drawLine(screenX * (1 - WINDOWSIZE), screenY * (WINDOWSIZE), screenX * (1 - WINDOWSIZE), screenY * (1 - WINDOWSIZE), paint);
+            canvas.drawLine(screenX * (WINDOWSIZE), screenY * (1 - WINDOWSIZE), screenX * (1 - WINDOWSIZE), screenY * (1 - WINDOWSIZE), paint);
+        }
+        return grid;
     }
 }
