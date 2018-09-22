@@ -1,5 +1,6 @@
 package w.pongrender;
 
+import android.util.Log;
 import android.util.TypedValue;
 import android.content.Context;
 
@@ -79,6 +80,7 @@ public class RendeX {
 		} else if(deltaX_p2 > this.tiltX + singleSideXRange) {
 			deltaX_p2 = this.tiltX + singleSideXRange;
 		}
+		Log.v("RendeX Iterate","deltaX_p1=" + Float.toString(deltaX_p1) + " deltaX_p2=" + Float.toString(deltaX_p2));
 
 		//Cap delta Y
 		//For self
@@ -93,6 +95,8 @@ public class RendeX {
 		} else if(deltaY_p2 > this.tiltY + singleSideYRange) {
 			deltaY_p2 = this.tiltY + singleSideYRange;
 		}
+		Log.v("RendeX Iterate","deltaY_p1=" + Float.toString(deltaY_p1) + " deltaY_p2=" + Float.toString(deltaY_p2));
+
 
 		//Set new velocities
 		//For self
@@ -104,11 +108,11 @@ public class RendeX {
 
 		//Set new positions
 		//For self
-		p1_p[0] = p1_v[0]*xSensitivity;
-		p1_p[1] = p1_v[1]*ySensitivity;
+		p1_p[0] = p1_p[0]+p1_v[0]*xSensitivity;
+		p1_p[1] = p1_p[1]+p1_v[1]*ySensitivity;
 		//For other
-		p2_p[0] = p2_v[0]*xSensitivity;
-		p2_p[1] = p2_v[1]*ySensitivity;
+		p2_p[0] = p2_p[0]+p2_v[0]*xSensitivity;
+		p2_p[1] = p2_p[1]+p2_v[1]*ySensitivity;
 	}
 	
 	public int[] renderBall() {
