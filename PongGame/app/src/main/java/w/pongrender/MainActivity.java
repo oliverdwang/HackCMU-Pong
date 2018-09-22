@@ -15,8 +15,8 @@ public class MainActivity extends TiltActivity {
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-        Log.d("Tilt Pitch", Float.toString(pitch)); //You can directly pass pitch. Pitch is for up down.
-        Log.d("Tilt Roll", Float.toString(roll)); //You can directly pass roll. Roll is for left right.
+//        Log.d("Tilt Pitch", Float.toString(pitch)); //You can directly pass pitch. Pitch is for up down.
+//        Log.d("Tilt Roll", Float.toString(roll)); //You can directly pass roll. Roll is for left right.
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         requestWindowFeature(Window.FEATURE_NO_TITLE);

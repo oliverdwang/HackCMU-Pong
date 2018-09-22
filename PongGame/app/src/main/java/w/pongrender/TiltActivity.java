@@ -66,9 +66,9 @@ public abstract class TiltActivity  extends AppCompatActivity implements SensorE
             azimuth = values[0] * 57.2957795f;
             pitch = values[1] * 57.2957795f;
             roll = values[2] * 57.2957795f;
-            Log.v("onSensorChanged","azimuth=" + Float.toString(azimuth));
-            Log.v("onSensorChanged","pitch=" + Float.toString(pitch));
-            Log.v("onSensorChanged","roll=" + Float.toString(roll));
+//            Log.v("onSensorChanged","azimuth=" + Float.toString(azimuth));
+//            Log.v("onSensorChanged","pitch=" + Float.toString(pitch));
+//            Log.v("onSensorChanged","roll=" + Float.toString(roll));
             magneticRaw = null;
             accelerometerRaw = null;
         }

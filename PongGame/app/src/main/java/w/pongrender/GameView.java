@@ -43,10 +43,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenX = displayMetrics.widthPixels;
         screenY = displayMetrics.heightPixels;
-        computeX= new RendeX(screenX,screenY,MainActivity.getRoll(),MainActivity.getPitch());
+        computeX= new RendeX(screenX,screenY,MainActivity.getRoll(),MainActivity.getPitch(),getContext());
 
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
+        Log.v("gv created","bhnnbbbbbbbhb");
 
     }
 
@@ -96,9 +97,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         if (canvas != null) {
             canvas.drawBitmap(grid, 0, 0, null);
-            paddle1.draw(canvas);
-            paddle2.draw(canvas);
-            ball.draw(canvas);
+            int[] temp={0,0};
+            //paddle1.update(temp);
+            //paddle1.draw(canvas);
+            //paddle2.draw(canvas);
+            //ball.draw(canvas);
 
 
         }
