@@ -2,6 +2,7 @@ package w.pongrender;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -39,8 +40,9 @@ public class Sprite {
     public void update(int[]coords,float depth){
         x = coords[0];
         y = coords[1];
+        Log.d("update in sprite","update starting");
         imageScale = Bitmap.createScaledBitmap(image,(int)(xs*depth),(int)(ys*depth),false);
-
+        Log.d("update in sprite","update done");
     }
     public void update(int goal){
 
