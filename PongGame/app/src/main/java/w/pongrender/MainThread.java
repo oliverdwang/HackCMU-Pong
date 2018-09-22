@@ -1,6 +1,7 @@
 package w.pongrender;
 
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class MainThread extends Thread {
@@ -24,15 +25,20 @@ public class MainThread extends Thread {
             try {
                 canvas = this.surfaceHolder.lockCanvas();
                 synchronized(surfaceHolder) {
+                    Log.v("before update","hi");
                     this.gameView.update();
+                    Log.v("after update","hi");
                     this.gameView.draw(canvas);
+                    Log.v("after drsw","hi");
                 }
-            } catch (Exception e) {} finally {
+            } catch (Exception e) {
+                Log.v("E in run()",e.toString());
+            } finally {
                 if (canvas != null) {
                     try {
                         surfaceHolder.unlockCanvasAndPost(canvas);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        Log.v("E in run() finally",e.toString());
                     }
                 }
             }
