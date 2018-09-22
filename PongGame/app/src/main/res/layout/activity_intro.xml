@@ -6,4 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".IntroActivity">
 
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="138dp"
+        android:layout_height="79dp"
+        android:text="Connect"
+        tools:layout_editor_absoluteX="357dp"
+        tools:layout_editor_absoluteY="152dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="138dp"
+        android:layout_height="79dp"
+        android:text="Host"
+        tools:layout_editor_absoluteX="114dp"
+        tools:layout_editor_absoluteY="152dp" />
+
 </android.support.constraint.ConstraintLayout>
