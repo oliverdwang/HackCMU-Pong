@@ -61,8 +61,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         paddle2 = new Sprite(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.paddle),(int)(screenX*P2SIZE),(int)(screenY*P2SIZE),false));
         ball = new Sprite(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.ball),(int)(screenX*BALLSIZE),(int)(screenY*BALLSIZE),false));
         grid=makeGrid();
-        scoreboard=makeScoreboard();
-        depthIndicator=makeDepthIndicator();
+        scoreboard=new Sprite(makeScoreboard());
+        depthIndicator=new Sprite(makeDepthIndicator());
         thread.setRunning(true);
         thread.start();
     }
@@ -82,8 +82,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
 
     public void update() {
-        computeX.iterate(MainActivity.getRoll(),MainActivity.getPitch());
-        float depth=renderDepth();
+        computeX.iterate(MainActivity.getRoll(),MainActivity.getPitch(),0f,0f);
+        float depth=computeX.renderDepth();
         ball.update(computeX.renderBall(),depth);
         int[] depthA={(int)(WINDOWGAP*screenX*depth),(int)(WINDOWGAP*screenY*depth)};
         depthIndicator.update(depthA,depth);
@@ -97,6 +97,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         if (canvas != null) {
             canvas.drawBitmap(grid, 0, 0, null);
             paddle1.draw(canvas);
+            paddle2.draw(canvas);
+            ball.draw(canvas);
+
 
         }
     }
