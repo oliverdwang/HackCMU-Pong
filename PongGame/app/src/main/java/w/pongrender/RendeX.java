@@ -1,4 +1,4 @@
-
+package w.pongrender;
 public class RendeX {
 	
 	private int ball_R;
@@ -8,7 +8,7 @@ public class RendeX {
 	final private double ball_R_ratio = 0.05;
 	final private double paddle_width_ratio = 0.2;
 	final private double paddle_height_ratio = 0.1;
-	final private 
+
 	
 	private float tiltX;
 	private float tiltY;

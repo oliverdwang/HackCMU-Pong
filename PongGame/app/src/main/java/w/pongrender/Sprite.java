@@ -23,11 +23,9 @@ public class Sprite {
     public void draw(Canvas canvas) {
         canvas.drawBitmap(image, x, y, null);
     }
-    public void update(){
-//        int[] coords = Oliver.renderBall(dimenx, dimeny);
-//        x = coords[0];
-//        y = coords[1];
-        x=x+1;
-        y=y+1;
+    public void update(int[]coords){
+        x = coords[0];
+        y = coords[1];
+
     }
 }

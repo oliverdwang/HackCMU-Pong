@@ -23,4 +23,12 @@ public class MainActivity extends TiltActivity {
 
         setContentView(new GameView(this));
     }
+
+    public static float getPitch() {
+        return pitch;
+    }
+
+    public static float getRoll() {
+        return roll;
+    }
 }

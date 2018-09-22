@@ -27,9 +27,9 @@ public abstract class TiltActivity  extends AppCompatActivity implements SensorE
     private float[] values = new float[3];
 
     // azimuth, pitch and roll
-    public float azimuth;
-    public float pitch;
-    public float roll;
+    public static float azimuth;
+    public static float pitch;
+    public static float roll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
