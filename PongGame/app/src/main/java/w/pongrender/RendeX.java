@@ -18,14 +18,18 @@ public class RendeX {
 	private float singleSideXRange;
 	private float singleSideYRange;
 	
-	private float tiltX;
-	private float tiltY;
+	private float tiltX_p1;
+	private float tiltY_p1;
+	private float tiltX_p2;
+	private float tiltY_p2;
 	
 	private float[] ball_p = {0, 0, 0};
 	private float[] ball_v = {0, 0, 0};
 	
 	private float[] p1_p = {0, 0}; //Master
 	private float[] p2_p = {0, 0};
+	private int[] p1_p_pix = {0, 0};
+	private int[] p2_p_pix = {0, 0};
 	private float[] p1_v = {0, 0}; //Slave
 	private float[] p2_v = {0, 0};
 	
@@ -38,12 +42,14 @@ public class RendeX {
 	private float deltaX_p2;
 	private float deltaY_p2;
 	
-	public RendeX(int dimenX, int dimenY, float tiltX, float tiltY, Context context) {
+	public RendeX(int dimenX, int dimenY, float tiltX_p1, float tiltY_p1, float tiltX_p2, float tiltY_p2, Context context) {
 		//Set initial vlaues
 		this.dimenX = dimenX;
 		this.dimenY = dimenY;
-		this.tiltX = tiltX;
-		this.tiltY = tiltY;
+		this.tiltX_p1 = tiltX_p1;
+		this.tiltY_p1 = tiltY_p2;
+		this.tiltX_p2 = tiltX_p2;
+		this.tiltY_p2 = tiltY_p2;
 
 		TypedValue outValue = new TypedValue();
 		context.getResources().getValue(R.dimen.xSensitivity, outValue, true);
@@ -62,38 +68,38 @@ public class RendeX {
 	}
 	
 	public void iterate(float tiltX_p1, float tiltY_p1, float tiltX_p2, float tiltY_p2) {
-		deltaX_p1 = this.tiltX - tiltX_p1;
-		deltaY_p1 = this.tiltY - tiltY_p1;
-		deltaX_p2 = this.tiltX - tiltX_p2;
-		deltaY_p2 = this.tiltY - tiltY_p2;
+		deltaX_p1 = this.tiltX_p1 - tiltX_p1;
+		deltaY_p1 = this.tiltY_p1 - tiltY_p1;
+		deltaX_p2 = this.tiltX_p2 - tiltX_p2;
+		deltaY_p2 = this.tiltY_p2 - tiltY_p2;
 
 		//Cap delta X
 		//For self
-		if(deltaX_p1 < this.tiltX - singleSideXRange) {
-			deltaX_p1 = this.tiltX - singleSideXRange;
-		} else if(deltaX_p1 > this.tiltX + singleSideXRange) {
-			deltaX_p1 = this.tiltX + singleSideXRange;
+		if(deltaX_p1 < this.tiltX_p1 - singleSideXRange) {
+			deltaX_p1 = this.tiltX_p1 - singleSideXRange;
+		} else if(deltaX_p1 > this.tiltX_p1 + singleSideXRange) {
+			deltaX_p1 = this.tiltX_p1 + singleSideXRange;
 		}
 		//For other
-		if(deltaX_p2 < this.tiltX - singleSideXRange) {
-			deltaX_p2 = this.tiltX - singleSideXRange;
-		} else if(deltaX_p2 > this.tiltX + singleSideXRange) {
-			deltaX_p2 = this.tiltX + singleSideXRange;
+		if(deltaX_p2 < this.tiltX_p2 - singleSideXRange) {
+			deltaX_p2 = this.tiltX_p2 - singleSideXRange;
+		} else if(deltaX_p2 > this.tiltX_p2 + singleSideXRange) {
+			deltaX_p2 = this.tiltX_p2 + singleSideXRange;
 		}
-		Log.v("RendeX Iterate","deltaX_p1=" + Float.toString(deltaX_p1) + " deltaX_p2=" + Float.toString(deltaX_p2));
+		//Log.v("RendeX Iterate","deltaX_p1=" + Float.toString(deltaX_p1) + " deltaX_p2=" + Float.toString(deltaX_p2));
 
 		//Cap delta Y
 		//For self
-		if(deltaY_p1 < this.tiltX - singleSideYRange) {
-			deltaY_p1 = this.tiltY - singleSideYRange;
-		} else if(deltaY_p1 > this.tiltY + singleSideYRange) {
-			deltaY_p1 = this.tiltY + singleSideYRange;
+		if(deltaY_p1 < this.tiltX_p1 - singleSideYRange) {
+			deltaY_p1 = this.tiltY_p1 - singleSideYRange;
+		} else if(deltaY_p1 > this.tiltY_p1 + singleSideYRange) {
+			deltaY_p1 = this.tiltY_p1 + singleSideYRange;
 		}
 		//For other
-		if(deltaY_p2 < this.tiltX - singleSideYRange) {
-			deltaY_p2 = this.tiltY - singleSideYRange;
-		} else if(deltaY_p2 > this.tiltY + singleSideYRange) {
-			deltaY_p2 = this.tiltY + singleSideYRange;
+		if(deltaY_p2 < this.tiltX_p2 - singleSideYRange) {
+			deltaY_p2 = this.tiltY_p2 - singleSideYRange;
+		} else if(deltaY_p2 > this.tiltY_p2 + singleSideYRange) {
+			deltaY_p2 = this.tiltY_p2 + singleSideYRange;
 		}
 		Log.v("RendeX Iterate","deltaY_p1=" + Float.toString(deltaY_p1) + " deltaY_p2=" + Float.toString(deltaY_p2));
 
@@ -127,17 +133,17 @@ public class RendeX {
 	}
 
 	public int[] renderPaddle1() {
-		int[] out = new int[2];
-		out[0] = (int)(p1_p[0]/100.0 * dimenX);
-		out[1] = (int)(p1_p[1]/100.0 * dimenY);
-		return out;
+		p1_p_pix[0] = (int)(p1_p[0]/100.0 * dimenX);
+		p1_p_pix[1] = (int)(p1_p[1]/100.0 * dimenY);
+		Log.d("renderPaddle1",Integer.toString(p1_p_pix[0]) + ", " + Integer.toString(p1_p_pix[1]));
+		return p1_p_pix;
 	}
 	
 	public int[] renderPaddle2() {
-		int[] out = new int[2];
-		out[0] = (int)(p2_p[0]/100.0 * dimenX);
-		out[1] = (int)(p2_p[1]/100.0 * dimenY);
-		return out;
+		p2_p_pix[0] = (int)(p2_p[0]/100.0 * dimenX);
+		p2_p_pix[1] = (int)(p2_p[1]/100.0 * dimenY);
+		Log.d("renderPaddle2",Integer.toString(p2_p_pix[0]) + ", " + Integer.toString(p2_p_pix[1]));
+		return p2_p_pix;
 	}
 	
 	public int isGoal() {

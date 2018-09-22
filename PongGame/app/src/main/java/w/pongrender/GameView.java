@@ -43,7 +43,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenX = displayMetrics.widthPixels;
         screenY = displayMetrics.heightPixels;
-        computeX= new RendeX(screenX,screenY,MainActivity.getRoll(),MainActivity.getPitch(),getContext());
+        computeX= new RendeX(screenX,screenY,MainActivity.getRoll(),MainActivity.getPitch(),0f,0f,getContext());
 
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
@@ -83,12 +83,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
 
     public void update() {
+        Log.d("update()","started");
         computeX.iterate(MainActivity.getRoll(),MainActivity.getPitch(),0f,0f);
-        float depth=computeX.renderDepth();
-        ball.update(computeX.renderBall(),depth);
-        int[] depthA={(int)(WINDOWGAP*screenX*depth),(int)(WINDOWGAP*screenY*depth)};
-        depthIndicator.update(depthA,depth);
+        Log.d("update()","after iterate");
+        //float depth=computeX.renderDepth();
+        //ball.update(computeX.renderBall(),depth);
+        //int[] depthA={(int)(WINDOWGAP*screenX*depth),(int)(WINDOWGAP*screenY*depth)};
+        //depthIndicator.update(depthA,depth);
+        Log.d("update()","before p1");
         paddle1.update(computeX.renderPaddle1());
+        Log.d("update()","after p1");
         paddle2.update(computeX.renderPaddle2());
         scoreboard.update(computeX.isGoal());
     }
@@ -103,7 +107,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             paddle2.draw(canvas);
             ball.draw(canvas);
 
-
+            Log.d("draw()","finished draw");
         }
     }
     public Bitmap makeGrid(){
@@ -141,13 +145,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawLine(0,screenY*(1),screenX*(1-WINDOWSIZE),screenY*(WINDOWSIZE),paint);
         canvas.drawLine(screenX*(1),screenY*(0),screenX*(WINDOWSIZE),screenY*(1-WINDOWSIZE),paint);
 
-        for(int i=1;i<=((int)GRIDNUMBER);i++){
-            WINDOWSIZE=1-(WINDOWGAP/GRIDNUMBER*i);
-            canvas.drawLine(screenX * (WINDOWSIZE), screenY * (WINDOWSIZE), screenX * (WINDOWSIZE), screenY * (1 - WINDOWSIZE), paint);
-            canvas.drawLine(screenX * (WINDOWSIZE), screenY * (WINDOWSIZE), screenX * (1 - WINDOWSIZE), screenY * (WINDOWSIZE), paint);
-            canvas.drawLine(screenX * (1 - WINDOWSIZE), screenY * (WINDOWSIZE), screenX * (1 - WINDOWSIZE), screenY * (1 - WINDOWSIZE), paint);
-            canvas.drawLine(screenX * (WINDOWSIZE), screenY * (1 - WINDOWSIZE), screenX * (1 - WINDOWSIZE), screenY * (1 - WINDOWSIZE), paint);
-        }
+
         return grid;
     }
     public Bitmap makeDepthIndicator(){
@@ -163,13 +161,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawLine(0,screenY*(1),screenX*(1-WINDOWSIZE),screenY*(WINDOWSIZE),paint);
         canvas.drawLine(screenX*(1),screenY*(0),screenX*(WINDOWSIZE),screenY*(1-WINDOWSIZE),paint);
 
-        for(int i=1;i<=((int)GRIDNUMBER);i++){
-            WINDOWSIZE=1-(WINDOWGAP/GRIDNUMBER*i);
-            canvas.drawLine(screenX * (WINDOWSIZE), screenY * (WINDOWSIZE), screenX * (WINDOWSIZE), screenY * (1 - WINDOWSIZE), paint);
-            canvas.drawLine(screenX * (WINDOWSIZE), screenY * (WINDOWSIZE), screenX * (1 - WINDOWSIZE), screenY * (WINDOWSIZE), paint);
-            canvas.drawLine(screenX * (1 - WINDOWSIZE), screenY * (WINDOWSIZE), screenX * (1 - WINDOWSIZE), screenY * (1 - WINDOWSIZE), paint);
-            canvas.drawLine(screenX * (WINDOWSIZE), screenY * (1 - WINDOWSIZE), screenX * (1 - WINDOWSIZE), screenY * (1 - WINDOWSIZE), paint);
-        }
+
         return grid;
     }
 }
