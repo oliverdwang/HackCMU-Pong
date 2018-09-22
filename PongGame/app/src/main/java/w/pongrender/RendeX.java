@@ -24,6 +24,7 @@ public class RendeX {
 	private float tiltY_p2;
 	
 	private float[] ball_p = {0, 0, 0};
+	private int[] ball_p_pix = {0, 0};
 	private float[] ball_v = {0, 0, 0};
 	
 	private float[] p1_p = {0, 0}; //Master
@@ -64,7 +65,9 @@ public class RendeX {
 		this.paddle_width = (int)(dimenX*paddle_ratio);
 		this.paddle_height = (int)(dimenY*paddle_ratio);
 
-		//Generate starting ball position, velocity, and paddle position
+		Log.d("dimen",Integer.toString(dimenX) + ", " + Integer.toString(dimenY));
+
+		//TODO: Generate starting ball position, velocity, and paddle position
 	}
 	
 	public void iterate(float tiltX_p1, float tiltY_p1, float tiltX_p2, float tiltY_p2) {
@@ -119,16 +122,22 @@ public class RendeX {
 		//For other
 		p2_p[0] = p2_p[0]+p2_v[0]*xSensitivity;
 		p2_p[1] = p2_p[1]+p2_v[1]*ySensitivity;
+
+
 	}
 	
 	public int[] renderBall() {
-		int[] out = new int[2];
-		out[0] = (int)(ball_p[0]/100.0 * dimenX);
-		out[1] = (int)(ball_p[1]/100.0 * dimenY);
-		return out;
+		Log.d("renderBall()","started");
+		Log.d("renderBall() x",Integer.toString((int)(ball_p[0]/100.0 * dimenX)));
+		ball_p_pix[0] = (int)(ball_p[0]/100.0 * dimenX);
+		Log.d("renderBall() y",Integer.toString((int)(ball_p[1]/100.0 * dimenY)));
+		ball_p_pix[1] = (int)(ball_p[1]/100.0 * dimenY);
+		Log.d("renderBall() finish",Integer.toString(ball_p_pix[0]) + ", " + Integer.toString(ball_p_pix[1]));
+		return ball_p_pix;
 	}
 
 	public float renderDepth() {
+		Log.d("renderDepth()",Float.toString(ball_p[2]/100));
 		return ball_p[2]/100;
 	}
 
