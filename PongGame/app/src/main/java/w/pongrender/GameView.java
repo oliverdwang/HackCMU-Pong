@@ -97,9 +97,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         if (canvas != null) {
             canvas.drawBitmap(grid, 0, 0, null);
-            int[] temp={0,0};
+            //int[] temp={0,0};
             //paddle1.update(temp);
-            //paddle1.draw(canvas);
+            paddle1.draw(canvas);
             //paddle2.draw(canvas);
             //ball.draw(canvas);
 
