@@ -90,13 +90,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         Log.d("update()","after depth");
         ball.update(computeX.renderBall());
         Log.d("update()","after ball");
-        int[] depthA={(int)(WINDOWGAP*screenX*depth),(int)(WINDOWGAP*screenY*depth)};
-        depthIndicator.update(depthA,depth);
+        //int[] depthA={(int)(WINDOWGAP*screenX*depth),(int)(WINDOWGAP*screenY*depth)};
+       // depthIndicator.update(depthA,depth);
         Log.d("update()","before p1");
         paddle1.update(computeX.renderPaddle1());
         Log.d("update()","after p1");
         paddle2.update(computeX.renderPaddle2());
-        scoreboard.update(computeX.isGoal());
+        //scoreboard.update(computeX.isGoal());
     }
     @Override
     public void draw(Canvas canvas) {
