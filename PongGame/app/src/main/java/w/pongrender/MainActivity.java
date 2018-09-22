@@ -11,6 +11,11 @@ public class MainActivity extends TiltActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // This is Richard's onCreate space
+        
+
+
+
         super.onCreate(savedInstanceState);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -31,4 +36,15 @@ public class MainActivity extends TiltActivity {
     public static float getRoll() {
         return roll;
     }
+
+
+
+
+
+    // This is Richard's space, for bluetooth stuff
+
+
+
+
+
 }

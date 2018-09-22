@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                 // Connect to the remote device through the socket. This call blocks
                 // until it succeeds or throws an exception.
                 mmSocket.connect();
-            } catch (IOException connectException) {
+            } catch (Exception connectException) {
                 // Unable to connect; close the socket and return.
                 try {
                     mmSocket.close();
