@@ -54,9 +54,7 @@ public class MainActivity extends TiltActivity {
             }
         }
 
-        // This is Richard's onCreate space
-        MY_UUID = UUID.fromString("7e3c2295-dc1b-4419-a424-50110c0df0d4");
-        connectBluetooth();
+
 
 //        Log.d("Tilt Pitch", Float.toString(pitch)); //You can directly pass pitch. Pitch is for up down.
 //        Log.d("Tilt Roll", Float.toString(roll)); //You can directly pass roll. Roll is for left right.
@@ -65,6 +63,16 @@ public class MainActivity extends TiltActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(new GameView(this));
+
+
+
+
+        // This is Richard's onCreate space
+        MY_UUID = UUID.fromString("7e3c2295-dc1b-4419-a424-50110c0df0d4");
+        connectBluetooth();
+        /*boolean isHost = getIntent().getBooleanExtra("isHost", false);
+        startConnecting(isHost);*/
+        
     }
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
