@@ -117,7 +117,19 @@ public class RendeX {
 		//Set new positions
 		//For self
 		p1_p[0] = p1_p[0]+p1_v[0]*xSensitivity;
+		if(p1_p[0] < 0) {
+			p1_p[0] = 0;
+		}
+		if((p1_p[0]*dimenX+paddle_width) > dimenX) {
+			p1_p[0] = 1-paddle_width/dimenX;
+		}
 		p1_p[1] = p1_p[1]+p1_v[1]*ySensitivity;
+		if(p1_p[1] < 0) {
+			p1_p[1] = 0;
+		}
+		if((p1_p[1]*dimenY+paddle_height) > dimenY) {
+			p1_p[1] = 1-paddle_height/dimenY;
+		}
 		//For other
 		p2_p[0] = p2_p[0]+p2_v[0]*xSensitivity;
 		p2_p[1] = p2_p[1]+p2_v[1]*ySensitivity;

@@ -43,7 +43,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenX = displayMetrics.widthPixels;
         screenY = displayMetrics.heightPixels;
-        computeX= new RendeX(screenX,screenY,MainActivity.getRoll(),MainActivity.getPitch(),0f,0f,getContext());
+        computeX= new RendeX(screenX,screenY,MainActivity.getPitch(),MainActivity.getRoll(),0f,0f,getContext());
 
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
@@ -84,7 +84,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update() {
         Log.d("update()","started");
-        computeX.iterate(MainActivity.getRoll(),MainActivity.getPitch(),0f,0f);
+        computeX.iterate(MainActivity.getPitch(),MainActivity.getRoll(),0f,0f);
         Log.d("update()","after iterate");
         float depth=computeX.renderDepth();
         Log.d("update()","after depth");
